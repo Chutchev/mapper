@@ -1,14 +1,18 @@
 import sys
 from pprint import pprint
-
+from webdriver_manager.chrome import ChromeDriverManager
 import selenium
 from selenium.webdriver import Chrome
 import pyautogui
+from selenium.webdriver.chrome.service import Service
 import keyboard
 from pynput import keyboard as kb
+from UI.mapper_start import start
 
+elements = {}
 
-def coords(key):
+def generate_element_dict(key):
+    global elements
     try:
         k = key.char
     except:
@@ -35,14 +39,15 @@ def coords(key):
                                 element = document.querySelector(".myHovered")
                                 return element""")
         if res is not None:
-            pprint(res.get_property("attributes"))
-    if k == "q":
+            for attr in res.get_property("attributes"):
+                print(res.tag_name, attr['name'], attr['value'], res.get_attribute("innerText"))
+    if k in ("q", "ctrl_c"):
         driver.quit()
         sys.exit()
 
 
-driver = Chrome("drivers/chromedriver.exe")
+driver = Chrome(service=Service(ChromeDriverManager().install()))
 
 driver.get("https://vk.com")
-with kb.Listener(on_press=coords) as lst:
+with kb.Listener(on_press=generate_element_dict) as lst:
     lst.join()
