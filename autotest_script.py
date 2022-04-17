@@ -1,18 +1,31 @@
 import sys
-from pprint import pprint
+
+from selenium.webdriver.chrome.webdriver import WebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 import selenium
 from selenium.webdriver import Chrome
-import pyautogui
 from selenium.webdriver.chrome.service import Service
-import keyboard
 from pynput import keyboard as kb
-from UI.mapper_start import start
+import json
 
 elements = {}
 
+driver: WebDriver
+
+def generate_xpath(tag, attrs):
+    start_xpath = f"//{tag}"
+    attr_xpath = ""
+    for name, value in attrs.items():
+        if name == 'text':
+            attr_xpath += f"normalize-space(.)='{value}' and "
+        else:
+            attr_xpath += f"@{name}='{value}' and "
+    attr_xpath = attr_xpath[:-5]
+    ready_xpath = f"{start_xpath}[{attr_xpath}]"
+    print(ready_xpath)
+
 def generate_element_dict(key):
-    global elements
+    global elements, driver
     try:
         k = key.char
     except:
@@ -39,15 +52,25 @@ def generate_element_dict(key):
                                 element = document.querySelector(".myHovered")
                                 return element""")
         if res is not None:
+            attrs = {}
             for attr in res.get_property("attributes"):
+                # xpath //tag[@attr="value"]
+                if attr['name'] != 'style':
+                    if attr['name'] == 'class':
+                        attr['value'].replace(' myHovered', '')
+                    attrs[attr['name']] = attr['value']
+                if res.get_attribute("innerText") != None:
+                    attrs['text'] = res.get_attribute("innerText")
                 print(res.tag_name, attr['name'], attr['value'], res.get_attribute("innerText"))
+            generate_xpath(res.tag_name, attrs)
+
     if k in ("q", "ctrl_c"):
         driver.quit()
         sys.exit()
 
-
-driver = Chrome(service=Service(ChromeDriverManager().install()))
-
-driver.get("https://vk.com")
-with kb.Listener(on_press=generate_element_dict) as lst:
-    lst.join()
+def start():
+    global driver
+    driver = Chrome(service=Service(ChromeDriverManager().install()))
+    driver.get("https://vk.com")
+    with kb.Listener(on_press=generate_element_dict) as lst:
+        lst.join()
