@@ -54,6 +54,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         attrs['text'] = res.get_attribute("innerText")
                 ready_xpath = generate_xpath(res.tag_name, attrs)
                 self.saveForm.xpath = ready_xpath
+                self.saveForm.xpath_edit.setText(ready_xpath)
                 self.saveForm.show()
 
 

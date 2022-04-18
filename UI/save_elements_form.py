@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(579, 153)
+        MainWindow.resize(579, 193)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.element_type = QtWidgets.QLineEdit(self.centralwidget)
@@ -22,8 +22,11 @@ class Ui_MainWindow(object):
         self.element_name.setGeometry(QtCore.QRect(50, 70, 471, 20))
         self.element_name.setObjectName("element_name")
         self.save_element = QtWidgets.QPushButton(self.centralwidget)
-        self.save_element.setGeometry(QtCore.QRect(50, 100, 471, 23))
+        self.save_element.setGeometry(QtCore.QRect(50, 150, 471, 23))
         self.save_element.setObjectName("save_element")
+        self.xpath_edit = QtWidgets.QLineEdit(self.centralwidget)
+        self.xpath_edit.setGeometry(QtCore.QRect(50, 100, 471, 20))
+        self.xpath_edit.setObjectName("xpath_edit")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -35,3 +38,4 @@ class Ui_MainWindow(object):
         self.element_type.setPlaceholderText(_translate("MainWindow", "Тип элемента"))
         self.element_name.setPlaceholderText(_translate("MainWindow", "Наименование элемента"))
         self.save_element.setText(_translate("MainWindow", "Сохранить элемент"))
+        self.xpath_edit.setPlaceholderText(_translate("MainWindow", "xpath_here"))

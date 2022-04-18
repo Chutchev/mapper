@@ -8,6 +8,7 @@ class SaveWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(SaveWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
+        self.xpath_edit.setReadOnly(True)
         self.save_element.clicked.connect(self.save_element_click)
         self.xpath = ""
 
