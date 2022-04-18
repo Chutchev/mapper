@@ -15,6 +15,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.saveForm = SaveWindow()
         self.btn_mapper.clicked.connect(self.start_script)
+        self.tags = {
+            "input": "поле",
+            "textarea": "поле",
+            "button": "кнопка",
+            "img": "изображение",
+            "div": "блок",
+            "a": "ссылка",
+            "span": "блок"
+        }
 
     def start_script(self):
         self.driver = Chrome(service=Service(ChromeDriverManager().install()))
@@ -53,6 +62,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     if res.get_attribute("innerText") != None:
                         attrs['text'] = res.get_attribute("innerText")
                         self.saveForm.element_name.setText(res.get_attribute("innerText"))
+                self.saveForm.element_type.setText(self.tags.get(res.tag_name, ""))
                 ready_xpath = generate_xpath(res.tag_name, attrs)
                 self.saveForm.xpath = ready_xpath
                 self.saveForm.xpath_edit.setText(ready_xpath)
