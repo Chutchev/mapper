@@ -52,6 +52,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         attrs[attr['name']] = attr['value']
                     if res.get_attribute("innerText") != None:
                         attrs['text'] = res.get_attribute("innerText")
+                        self.saveForm.element_name.setText(res.get_attribute("innerText"))
                 ready_xpath = generate_xpath(res.tag_name, attrs)
                 self.saveForm.xpath = ready_xpath
                 self.saveForm.xpath_edit.setText(ready_xpath)
