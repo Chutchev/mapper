@@ -22,6 +22,11 @@ PyMsgBox==1.0.9
 pynput==1.7.6
 pyOpenSSL==22.0.0
 pyperclip==1.8.2
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.9.1
+PyQt6==6.3.0
+PyQt6-Qt6==6.3.0
+PyQt6-sip==13.3.1
 PyRect==0.2.0
 PyScreeze==0.1.28
 PySocks==1.7.1
@@ -37,4 +42,5 @@ trio-websocket==0.9.2
 typing_extensions==4.1.1
 urllib3==1.26.9
 uvicorn==0.17.6
+webdriver-manager==3.5.4
 wsproto==1.1.0
